@@ -1,5 +1,4 @@
 package server.helpers.idMap;
-
 import server.helpers.Parsers;
 
 import java.io.File;
@@ -8,11 +7,12 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class IdMap implements Serializable {
     private static final long serialVersionUID = 1L;
     private static ConcurrentHashMap<Integer, String> map = new ConcurrentHashMap<Integer, String>();
-    private static int maxId = 0;
+    private static AtomicInteger maxId = new AtomicInteger(0);
     private static transient final String filename = Parsers.PATH_MAP;
 
     public static void initialize() throws IOException {
@@ -34,7 +34,7 @@ public class IdMap implements Serializable {
         return false;
     }
 
-    public static Optional<String> deleteById(int id) {
+    public static synchronized Optional<String> deleteById(int id) {
         String filename = map.get(id);
         map.remove(id);
         return Optional.of(filename);
@@ -44,9 +44,10 @@ public class IdMap implements Serializable {
         return map.get(id);
     }
 
-    public static int put(String filename) {
-        map.put(maxId++, filename);
-        return maxId - 1;
+    public static synchronized int put(String filename) {
+        maxId.addAndGet(1);
+        map.put(maxId.get(), filename);
+        return maxId.get() - 1;
     }
 
     public static void serialize() {
