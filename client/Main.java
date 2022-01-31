@@ -38,7 +38,6 @@ public class Main {
                 command = commandCreator.createCommand(CommandTypes.EXIT.getIndex(), input, output);
             } finally {
                 command.apply();
-                Thread.sleep(1000);
             }
 
         } catch (Exception e) {

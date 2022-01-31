@@ -20,15 +20,16 @@ public class Parsers {
     public static final int FILENAME_LENGTH = 10;
 
 //    public static final String PATH_MAP = System.getProperty("user.dir") +
-//            File.separator + "src" + File.separator + "server" + File.separator;
+//            File.separator + "src" + File.separator + "server" + File.separator + "idMap.data";
 //
 //    public static final String PATH_SERVER = System.getProperty("user.dir") +
 //            File.separator + "src" + File.separator + "server" + File.separator + "data";
 //
 //    public static final String PATH_CLIENT = System.getProperty("user.dir") +
-//            File.separator + "src" + File.separator + "server" + File.separator + "idMap.data";
+//            File.separator + "src" + File.separator + "client" + File.separator + "data";
 
-    public static String generateFilename() {        int leftLimit = 'a'; // letter 'a'
+    public static String generateFilename() {
+        int leftLimit = 'a'; // letter 'a'
         int rightLimit = 'z'; // letter 'z'
         int targetStringLength = FILENAME_LENGTH;
         Random random = new Random();
