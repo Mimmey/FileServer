@@ -17,6 +17,11 @@ public class ClientGetter extends ClientCommand {
     public HttpStatuses renameFile(File file) throws IOException {
         printer.printResponseFileWasDownloaded();
         String newFilename = reader.readLine();
+
+        if (newFilename.isEmpty()) {
+            newFilename = Parsers.generateFilename();
+        }
+
         File newFile = new File(Parsers.getClientPath(newFilename));
 
         if (newFile.exists())
@@ -72,7 +77,7 @@ public class ClientGetter extends ClientCommand {
                     e.printStackTrace();
                 }
             } else {
-                throw new ServerException("Cannot get file");
+                status = HttpStatuses.NOT_FOUND;
             }
 
             try {

@@ -30,21 +30,6 @@ public class ClientCreator extends ClientCommand {
 
         output.writeUTF(request.toString());
         printer.printRequestSent();
-        /*
-        int ready = Integer.parseInt(input.readUTF());
-        if (ready == ReadReadyStatuses.READY.getCode()) {
-            try {
-                File file = new File(Parsers.getClientPath(filename));
-                byte[] message = Files.readAllBytes(file.toPath());
-                output.writeInt(message.length);
-                output.write(message);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            throw new ServerException("Cannot send file");
-        }
-        */
 
         String response = input.readUTF();
 

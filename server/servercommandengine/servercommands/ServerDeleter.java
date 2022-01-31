@@ -18,21 +18,21 @@ public class ServerDeleter extends ServerCommand {
     public boolean apply() throws IOException {
         try {
             boolean isName = Integer.parseInt(Parsers.getFirstWord(data)) == 1;
-            Optional<String> filename;
+            Optional<String> filename = null;
             boolean deletedByName = false;
             boolean deletedByFilename = false;
 
             if (isName) {
                 filename = Optional.of(Parsers.getStringWithoutFirstWord(data));
-                System.out.println(filename);
                 deletedByName = IdMap.deleteByFilename(filename.get());
-                System.out.println("isName = true");
             } else {
                 int id = Integer.parseInt(Parsers.getStringWithoutFirstWord(data));
-                System.out.println(id);
-                filename = IdMap.deleteById(id);
-                deletedByFilename = filename.isPresent();
-                System.out.println("isName = false");
+                try {
+                    filename = IdMap.deleteById(id);
+                    deletedByFilename = filename.isPresent();
+                } catch (NullPointerException e) {
+                    deletedByFilename = false;
+                }
             }
 
             if ((deletedByFilename || deletedByName) && (new File(Parsers.getServerPath(filename.get()))).delete()) {
