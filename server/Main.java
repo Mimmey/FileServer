@@ -1,6 +1,6 @@
 package server;
 
-import server.helpers.Parsers;
+import server.helpers.StringAndPathWorkers;
 import server.helpers.Printer;
 import server.helpers.idMap.IdMap;
 import server.servercommandengine.servercommandfactory.ServerCommandCreator;
@@ -24,7 +24,7 @@ public class Main {
         ) {
             IdMap.initialize();
             printer.printServerStarted();
-            File file = new File(Parsers.PATH_SERVER);
+            File file = new File(StringAndPathWorkers.PATH_SERVER);
             file.mkdir();
 
             while (true) {

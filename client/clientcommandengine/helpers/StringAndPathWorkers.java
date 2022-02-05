@@ -1,20 +1,12 @@
-package server.helpers;
+package client.clientcommandengine.helpers;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 
-public class Parsers {
-
-    public static final String PATH_SERVER = System.getProperty("user.dir") + File.separator + "File Server" + File.separator + "task" +
-            File.separator + "src" + File.separator + "server" + File.separator + "data";
+public class StringAndPathWorkers {
 
     public static final String PATH_CLIENT = System.getProperty("user.dir") + File.separator + "File Server" + File.separator + "task" +
             File.separator + "src" + File.separator + "client" + File.separator + "data";
-
-    public static final String PATH_MAP = System.getProperty("user.dir") + File.separator + "File Server" + File.separator + "task" +
-            File.separator + "src" + File.separator + "server" + File.separator + "idMap.data";
 
     public static final String EXTENSION = ".txt";
     public static final int FILENAME_LENGTH = 10;
@@ -62,10 +54,6 @@ public class Parsers {
         }
 
         return stringBuilder.toString();
-    }
-
-    public static String getServerPath(String s) {
-        return PATH_SERVER + File.separator + s;
     }
 
     public static String getClientPath(String s) {

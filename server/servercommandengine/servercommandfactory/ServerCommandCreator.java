@@ -1,7 +1,7 @@
 package server.servercommandengine.servercommandfactory;
 
 import server.helpers.CommandTypes;
-import server.helpers.Parsers;
+import server.helpers.StringAndPathWorkers;
 import server.helpers.Printer;
 import server.servercommandengine.servercommands.*;
 
@@ -16,7 +16,7 @@ public class ServerCommandCreator extends ServerCommandFactory {
     }
 
     private CommandTypes getCommandType(String request) {
-        String method = Parsers.getFirstWord(request);
+        String method = StringAndPathWorkers.getFirstWord(request);
 
         switch (method) {
             case "PUT":
@@ -33,7 +33,7 @@ public class ServerCommandCreator extends ServerCommandFactory {
     @Override
     public ServerCommand createCommand(String request, DataInputStream input, DataOutputStream output) {
         CommandTypes commandType = getCommandType(request);
-        String data = Parsers.getStringWithoutFirstWord(request);
+        String data = StringAndPathWorkers.getStringWithoutFirstWord(request);
 
         switch (commandType) {
             case GET:

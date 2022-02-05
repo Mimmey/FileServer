@@ -2,7 +2,7 @@ package server.servercommandengine.servercommands;
 
 import server.helpers.idMap.IdMap;
 import server.helpers.HttpStatuses;
-import server.helpers.Parsers;
+import server.helpers.StringAndPathWorkers;
 import server.helpers.Printer;
 
 import java.io.*;
@@ -15,8 +15,8 @@ public class ServerCreator extends ServerCommand {
 
     @Override
     public boolean apply() throws IOException {
-        String filename = Parsers.getFirstWord(this.data);
-        File file = new File(Parsers.getServerPath(filename));
+        String filename = StringAndPathWorkers.getFirstWord(this.data);
+        File file = new File(StringAndPathWorkers.getServerPath(filename));
 
         if (file.exists()) {
             output.writeUTF(Integer.toString(HttpStatuses.FORBIDDEN.getCode()));

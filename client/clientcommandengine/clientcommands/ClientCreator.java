@@ -1,10 +1,10 @@
 package client.clientcommandengine.clientcommands;
-import client.clientcommandengine.helpers.ReadReadyStatuses;
-import server.helpers.HttpStatuses;
-import server.helpers.Parsers;
-import server.helpers.Printer;
+
+import client.clientcommandengine.helpers.HttpStatuses;
+import client.clientcommandengine.helpers.StringAndPathWorkers;
+import client.clientcommandengine.helpers.Printer;
+
 import java.io.*;
-import java.nio.file.Files;
 import java.rmi.ServerException;
 
 public class ClientCreator extends ClientCommand {
@@ -18,12 +18,11 @@ public class ClientCreator extends ClientCommand {
         StringBuilder request = new StringBuilder("PUT ");
 
         printer.printEnterFilename();
-        String filename = reader.readLine();
 
         printer.printEnterFilenameOnServer();
         String serverFilename = reader.readLine();
         if (serverFilename.isEmpty()) {
-            serverFilename = Parsers.generateFilename();
+            serverFilename = StringAndPathWorkers.generateFilename();
         }
 
         request.append(serverFilename).append(" ");
@@ -36,7 +35,7 @@ public class ClientCreator extends ClientCommand {
         HttpStatuses status = HttpStatuses.FORBIDDEN;
 
         try {
-            int statusCode = Integer.parseInt(Parsers.getFirstWord(response));
+            int statusCode = Integer.parseInt(StringAndPathWorkers.getFirstWord(response));
             status = HttpStatuses.findByCode(statusCode);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();
@@ -44,7 +43,7 @@ public class ClientCreator extends ClientCommand {
 
         switch (status) {
             case OK:
-                int id = Integer.parseInt(Parsers.getStringWithoutFirstWord(response));
+                int id = Integer.parseInt(StringAndPathWorkers.getStringWithoutFirstWord(response));
                 printer.printResponseFileSavedOnServer(id);
                 break;
             case FORBIDDEN:

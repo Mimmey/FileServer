@@ -1,7 +1,7 @@
 package client.clientcommandengine.clientcommandfactory;
 
 import client.clientcommandengine.clientcommands.ClientCommand;
-import server.helpers.Printer;
+import client.clientcommandengine.helpers.Printer;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;

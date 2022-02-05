@@ -1,9 +1,5 @@
 package client.clientcommandengine.clientcommands;
-import client.clientcommandengine.helpers.IdOrNameStatuses;
-import client.clientcommandengine.helpers.ReadReadyStatuses;
-import server.helpers.HttpStatuses;
-import server.helpers.Parsers;
-import server.helpers.Printer;
+import client.clientcommandengine.helpers.*;
 
 import java.io.BufferedReader;
 import java.io.DataInputStream;
@@ -42,7 +38,7 @@ public class ClientDeleter extends ClientCommand {
         HttpStatuses status = HttpStatuses.NOT_FOUND;
 
         try {
-            int statusCode = Integer.parseInt(Parsers.getFirstWord(response));
+            int statusCode = Integer.parseInt(StringAndPathWorkers.getFirstWord(response));
             status = HttpStatuses.findByCode(statusCode);
         } catch (IllegalArgumentException e) {
             e.printStackTrace();

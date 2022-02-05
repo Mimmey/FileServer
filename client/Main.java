@@ -2,9 +2,9 @@ package client;
 
 import client.clientcommandengine.clientcommandfactory.ClientCommandCreator;
 import client.clientcommandengine.clientcommands.ClientCommand;
-import server.helpers.CommandTypes;
-import server.helpers.Parsers;
-import server.helpers.Printer;
+import client.clientcommandengine.helpers.CommandTypes;
+import client.clientcommandengine.helpers.StringAndPathWorkers;
+import client.clientcommandengine.helpers.Printer;
 
 import java.io.*;
 import java.net.InetAddress;
@@ -16,13 +16,13 @@ public class Main {
         int port = 23456;
 
         try (
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            Printer printer = new Printer(new BufferedWriter(new OutputStreamWriter(System.out)));
-            Socket socket = new Socket(InetAddress.getByName(address), port);
-            DataInputStream input = new DataInputStream(socket.getInputStream());
-            DataOutputStream output = new DataOutputStream(socket.getOutputStream())
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                Printer printer = new Printer(new BufferedWriter(new OutputStreamWriter(System.out)));
+                Socket socket = new Socket(InetAddress.getByName(address), port);
+                DataInputStream input = new DataInputStream(socket.getInputStream());
+                DataOutputStream output = new DataOutputStream(socket.getOutputStream())
         ) {
-            File file = new File(Parsers.PATH_CLIENT);
+            File file = new File(StringAndPathWorkers.PATH_CLIENT);
             file.mkdir();
 
             printer.printEnterAction();

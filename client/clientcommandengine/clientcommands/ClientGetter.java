@@ -1,9 +1,5 @@
 package client.clientcommandengine.clientcommands;
-import client.clientcommandengine.helpers.IdOrNameStatuses;
-import client.clientcommandengine.helpers.ReadReadyStatuses;
-import server.helpers.HttpStatuses;
-import server.helpers.Parsers;
-import server.helpers.Printer;
+import client.clientcommandengine.helpers.*;
 
 import java.io.*;
 import java.rmi.ServerException;
@@ -19,10 +15,10 @@ public class ClientGetter extends ClientCommand {
         String newFilename = reader.readLine();
 
         if (newFilename.isEmpty()) {
-            newFilename = Parsers.generateFilename();
+            newFilename = StringAndPathWorkers.generateFilename();
         }
 
-        File newFile = new File(Parsers.getClientPath(newFilename));
+        File newFile = new File(StringAndPathWorkers.getClientPath(newFilename));
 
         if (newFile.exists())
             return HttpStatuses.FORBIDDEN;
@@ -56,7 +52,7 @@ public class ClientGetter extends ClientCommand {
         output.writeUTF(request.toString());
         printer.printRequestSent();
 
-        File file = new File(Parsers.getClientPath(Parsers.generateFilename()));
+        File file = new File(StringAndPathWorkers.getClientPath(StringAndPathWorkers.generateFilename()));
         HttpStatuses status = HttpStatuses.NOT_FOUND;
 
         if (file.exists()) {
@@ -81,7 +77,7 @@ public class ClientGetter extends ClientCommand {
             }
 
             try {
-                int statusCode = Integer.parseInt(Parsers.getFirstWord(response));
+                int statusCode = Integer.parseInt(StringAndPathWorkers.getFirstWord(response));
                 status = HttpStatuses.findByCode(statusCode);
             } catch (IllegalArgumentException e) {
                 e.printStackTrace();

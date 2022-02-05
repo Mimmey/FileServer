@@ -14,17 +14,17 @@ public class ServerGetter extends ServerCommand {
 
     @Override
     public boolean apply() throws IOException {
-        boolean isName = Integer.parseInt(Parsers.getFirstWord(data)) == IdOrNameStatuses.NAME.getCode();
+        boolean isName = Integer.parseInt(StringAndPathWorkers.getFirstWord(data)) == IdOrNameStatuses.NAME.getCode();
         String filename;
 
         if (isName) {
-            filename = Parsers.getStringWithoutFirstWord(data);
+            filename = StringAndPathWorkers.getStringWithoutFirstWord(data);
         } else {
-            int id = Integer.parseInt(Parsers.getStringWithoutFirstWord(data));
+            int id = Integer.parseInt(StringAndPathWorkers.getStringWithoutFirstWord(data));
             filename = IdMap.getFilenameById(id);
         }
 
-        File file = new File(Parsers.getServerPath(filename));
+        File file = new File(StringAndPathWorkers.getServerPath(filename));
 
         if (!file.exists()) {
             output.writeUTF(Integer.toString(HttpStatuses.NOT_FOUND.getCode()));

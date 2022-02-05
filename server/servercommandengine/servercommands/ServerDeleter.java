@@ -1,7 +1,7 @@
 package server.servercommandengine.servercommands;
 
 import server.helpers.HttpStatuses;
-import server.helpers.Parsers;
+import server.helpers.StringAndPathWorkers;
 import server.helpers.Printer;
 import server.helpers.idMap.IdMap;
 
@@ -17,16 +17,16 @@ public class ServerDeleter extends ServerCommand {
     @Override
     public boolean apply() throws IOException {
         try {
-            boolean isName = Integer.parseInt(Parsers.getFirstWord(data)) == 1;
+            boolean isName = Integer.parseInt(StringAndPathWorkers.getFirstWord(data)) == 1;
             Optional<String> filename = null;
             boolean deletedByName = false;
             boolean deletedByFilename = false;
 
             if (isName) {
-                filename = Optional.of(Parsers.getStringWithoutFirstWord(data));
+                filename = Optional.of(StringAndPathWorkers.getStringWithoutFirstWord(data));
                 deletedByName = IdMap.deleteByFilename(filename.get());
             } else {
-                int id = Integer.parseInt(Parsers.getStringWithoutFirstWord(data));
+                int id = Integer.parseInt(StringAndPathWorkers.getStringWithoutFirstWord(data));
                 try {
                     filename = IdMap.deleteById(id);
                     deletedByFilename = filename.isPresent();
@@ -35,7 +35,7 @@ public class ServerDeleter extends ServerCommand {
                 }
             }
 
-            if ((deletedByFilename || deletedByName) && (new File(Parsers.getServerPath(filename.get()))).delete()) {
+            if ((deletedByFilename || deletedByName) && (new File(StringAndPathWorkers.getServerPath(filename.get()))).delete()) {
                 output.writeUTF(Integer.toString(HttpStatuses.OK.getCode()));
             } else {
                 output.writeUTF(Integer.toString(HttpStatuses.NOT_FOUND.getCode()));
